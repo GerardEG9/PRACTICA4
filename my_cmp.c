@@ -22,21 +22,20 @@ int main (int argc, char *argv[] ){
     int line = 1;
     int i = 1;
     char buffer1,buffer2;
-    ssize_t read1, read2;
+    int read1, read2;
     while ((read1 = read(fd1, &buffer1, 1)) > 0 && (read2 = read(fd2, &buffer2, 1)) > 0) {
         if (read1 == -1 || read2 == -1) {
             perror("Error llegint el fitxer");
             exit(-1);
         }
-        if (buffer1 == '\n' && buffer2 == '\n'){
+        if (buffer1 != buffer2){
+            printf("Hi ha una diferencia en el byte %d i en la linea %d\n",i,line);
+            exit(-1);
+        }
+        if (buffer1 == '\n'){
             line ++;
         }
-        if (buffer1 != buffer2){
-            printf("%c\n", buffer1);
-            printf("%c\n", buffer2);
-            printf("Hi ha una diferencia en el byte %d i en la linea %d\n",i,line);
-        exit(-1);
-        }
+
         i ++;
     }
     close(fd1);
