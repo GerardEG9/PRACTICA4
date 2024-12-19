@@ -22,12 +22,13 @@ int main (int argc, char *argv[] ){
     int line = 1;
     int i = 1;
     char buffer1,buffer2;
-    while (read(fd1,&buffer1, 1)>0 || read(fd2,&buffer2, 1)>0){
-        if (read(fd1, &buffer1, 1)==-1 || read(fd2, &buffer2, 1) == -1){
+    ssize_t read1, read2;
+    while ((read1 = read(fd1, &buffer1, 1)) > 0 && (read2 = read(fd2, &buffer2, 1)) > 0) {
+        if (read1 == -1 || read2 == -1) {
             perror("Error llegint el fitxer");
             exit(-1);
         }
-        if (buffer1 == '\n'){
+        if (buffer1 == '\n' && buffer2 == '\n'){
             line ++;
         }
         if (buffer1 != buffer2){
