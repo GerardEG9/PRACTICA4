@@ -1,4 +1,4 @@
-#include <stdlib.h>
+ #include <stdlib.h>
 #include <stdio.h>
 #include <fcntl.h>
 #include <unistd.h>
@@ -20,10 +20,14 @@ int main (int argc, char *argv[] ){
 
 
     int line = 1;
-    int i = 1;
+    int i = 0;
     char buffer1,buffer2;
     int read1, read2;
-    while ((read1 = read(fd1, &buffer1, 1)) > 0 && (read2 = read(fd2, &buffer2, 1)) > 0) {
+    int acabat = 0;
+    while (acabat==0) {
+        i++;
+        read1 = read(fd1, &buffer1, 1);
+        read2 = read(fd2, &buffer2, 1);
         if (read1 == -1 || read2 == -1) {
             perror("Error llegint el fitxer");
             exit(-1);
@@ -32,14 +36,19 @@ int main (int argc, char *argv[] ){
             printf("Hi ha una diferencia en el byte %d i en la linea %d\n",i,line);
             exit(-1);
         }
+        if (read1==0 && read2==0){
+        exit(-1);
+        }
+
         if (buffer1 == '\n'){
             line ++;
         }
-
-        i ++;
     }
-    close(fd1);
-    close(fd2);
+    if (acabat!=0){
+    printf("Hi ha una diferencia en el byte %d i en la linea %d\n",i,line);
+    }
 
-    return 0;
+
+
+
 }
