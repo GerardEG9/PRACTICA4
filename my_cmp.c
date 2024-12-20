@@ -37,15 +37,12 @@ int main (int argc, char *argv[] ){
             exit(-1);
         }
         if (read1==0 && read2==0){
-        exit(-1);
+        acabat++;
         }
 
         if (buffer1 == '\n'){
             line ++;
         }
-    }
-    if (acabat!=0){
-    printf("Hi ha una diferencia en el byte %d i en la linea %d\n",i,line);
     }
 
 
